@@ -1,0 +1,15 @@
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    env_file:
+      - ./envs/mongo-express
+    networks:
+      - {{network_name}}
+      - proxy
+    depends_on:
+      - mongo
+    environment:
+      - VIRTUAL_HOST={{mex}}{{domain}}
+    ports:
+      - "8888:8081"
+    restart: unless-stopped

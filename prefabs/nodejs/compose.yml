@@ -1,0 +1,14 @@
+  backend:
+    image: {{org}}/{{project}}-backend:{{tag}}
+    networks:
+      - proxy
+      - {{network_name}}
+    command: bash -c "pm2-runtime start app.js"
+    env_file:
+      - ./envs/nodejs
+    environment:
+      - VIRTUAL_HOST={{backend}}{{domain}}
+    volumes:
+        - ./images:/app/public/images
+    expose:
+      - 80

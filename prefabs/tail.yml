@@ -1,0 +1,7 @@
+
+networks:
+  {{network_name}}:
+    driver: {{network_driver}}
+    name: {{network_name}}
+  proxy:
+    external: true

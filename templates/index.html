@@ -1,0 +1,119 @@
+<!doctype html>
+{% set envs = {'production': 'Production', 'staging': 'Staging', 'dev': 'Dev/local'} %}
+<link rel="stylesheet" href="main.css">
+<head>
+<title>Compose generator</title> 
+<meta charset=utf-8>
+<script>
+    {% for e in envs.keys() %}
+    function enable_{{ e }}() {
+    if (document.getElementById("has_{{ e }}").checked) {
+        console.log('checked has_{{ e }}')
+        document.getElementById("vhost_{{ e }}").disabled = false;
+    } else {
+        console.log('unchecked has_{{ e }}')
+        document.getElementById("vhost_{{ e }}").disabled = true;
+    }
+    }
+    {% endfor %}
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+
+</head>
+
+<body>
+
+    <form action="{{ url_for("form")}}" method="post" class="container">
+
+    <fieldset class="input-block curv">
+        <legend>General</legend>
+        <label>Dockerhub organization name: <input type="text" name="org" value="centergamedev" class="input-text"></label>
+        <label>Project name: <input type="text" name="project" value="acme_project" class="input-text"></label>
+        <label>Portainer team name: <input type="text" name="team" value="dev" class="input-text"></label>
+        <label>Letsencrypt contact email: <input type="text" name="email" value="dev@center-game" class="input-text"></label>
+    </fieldset>
+
+    <fieldset class="input-block curv">
+        <legend>Features</legend>
+        {% for n,f in feat.items() %}
+
+            <fieldset class="feature-block curv">
+                <legend>{{ n }}</legend>
+                {% for k,v in f.items() %}
+                <label class="toggler-wrapper style-1">
+                    <input type="checkbox" name="has_{{ k }}">
+                    <div class="toggler-slider"><div class="toggler-knob"></div></div>
+                    <div class="badge">{{ v }}</div>
+                </label>
+                {% endfor %}
+            </fieldset>
+
+        {% endfor %}
+    </fieldset>
+
+
+    <fieldset class="input-block curv">
+        <legend>Environments</legend>
+        {% for k,v in envs.items() %}
+        <label class="toggler-wrapper style-1">
+            <input type="checkbox" name="has_{{ k }}" id="has_{{ k }}" onclick="enable_{{k}}()">
+            <div class="toggler-slider"><div class="toggler-knob"></div></div>
+            <div class="badge">{{ v }}</div>
+        </label>
+        {% endfor %}
+    </fieldset>
+
+
+    <fieldset class="input-block curv">
+        <legend>Virtual host setup</legend>
+        {% for k,v in envs.items() %}
+                <label>{{ v }} hostname: 
+                    <input type="text" name="vhost_{{ k }}" id="vhost_{{ k }}" disabled="True" value="center-game.com" class="input-text"></label>
+        {% endfor %}
+    </fieldset>
+
+    <fieldset class="input-block curv">
+        <legend>Additional options</legend>
+        <label>Network name <small>(leave blank to use project name): </small><input type="text" name="network_name" class="input-text"></label>
+        
+        
+        <label class="toggler-wrapper style-1">
+            <input type="checkbox" name="has_separate_db" id="has_separate_db">
+            <div class="toggler-slider"><div class="toggler-knob"></div></div>
+            <div class="badge">Separate compose file for database</div>
+        </label>
+        <label>Compose file version:
+            <select name="compose_version" class="input-drop">
+                <option value="3.8" selected>3.8</option>
+                <option value="3.7">3.7</option>
+                <option value="3.6">3.6</option>
+                <option value="3.5">3.5</option>
+                <option value="3.4">3.4</option>
+                <option value="3.3">3.3</option>
+                <option value="3.2">3.2</option>
+                <option value="3.1">3.1</option>
+                <option value="3.0">3.0</option>
+                <option value="2.4">2.4</option>
+                <option value="2.3">2.3</option>
+                <option value="2.2">2.2</option>
+                <option value="2.1">2.1</option>
+                <option value="2.0">2.0</option>
+            </select>
+        </label>
+        <label>Network driver:
+            <select name="network_driver" class="input-drop">
+                <option value="bridge" selected>bridge</option>
+                <option value="overlay">overlay</option>
+            </select>
+        </label>
+    </fieldset>
+
+    <div class="input-block curv">
+        <button type="submit">Generate</button>
+    </div>
+    </form>
+
+</body>

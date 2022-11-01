@@ -1,0 +1,13 @@
+  docs:
+    container_name: docs
+    image: {{org}}/{{project}}-docs:{{tag}}
+    ports:
+      - "80"
+    environment:
+      - VIRTUAL_HOST={{docs}}{{domain}}
+      - LETSENCRYPT_HOST={{docs}}{{domain}}
+      - LETSENCRYPT_EMAIL={{email}}
+    labels:
+      - io.portainer.accesscontrol.teams={{team}}
+    networks:
+      - proxy

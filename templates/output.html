@@ -1,0 +1,46 @@
+<!doctype html>
+
+<head>
+<title>Compose generator (output)</title>
+<meta charset=utf-8>
+
+<link rel="stylesheet" href="main.css">
+<link href="prism.css" rel="stylesheet" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+</head>
+<body>
+<script src="prism.js"></script>
+<div class="container">
+<div class="head" id="back">
+    <div class="head-buttons">
+        <a href="/" class="button">Back</a>
+    </div>
+    <div class="alist">
+    {% for k in payload.keys() %}
+        <a href="#header_{{ k }}" class="local button">{{ k }}</a>
+    {% endfor %}
+    </div>
+</div>
+<div class="output">
+    {% for k,v in payload.items() %}
+    <div class="output-block">
+        <div id="header_{{ k }}" class="header">
+            <div class="header-text">{{ k }}</div>
+            <div class="header-buttons">
+                <a href="#back" class="local button">↑Top</a>
+            </div>
+        </div>
+        <div class="codeblock">
+            <pre class="code"><code class="language-yaml line-numbers" id="data_{{ k }}">{{ v }}</code></pre>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="tail">
+    <div class="header-buttons"><a href="#back" class="local button">↑Top</a></div>
+</div>
+</div>
+</body>

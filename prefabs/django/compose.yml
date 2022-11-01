@@ -1,0 +1,19 @@
+  backend:
+    image: {{org}}/{{project}}-backend:{{tag}}
+    container_name: {{project}}-django-backend
+    networks:
+      - {{network_name}}
+      - proxy
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+    labels:
+      - io.portainer.accesscontrol.teams={{team}}
+    env_file:
+      - ./envs/django-backend
+    environment:
+      - VIRTUAL_HOST={{backend}}{{domain}}
+      - LETSENCRYPT_HOST={{backend}}{{domain}}
+      - LETSENCRYPT_EMAIL={{email}}
+    command: bash -c "python manage.py collectstatic --no-input && python manage.py makemigrations --no-input && python manage.py migrate --no-input && python manage.py runserver 0.0.0.0:8000"

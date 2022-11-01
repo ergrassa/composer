@@ -1,0 +1,259 @@
+@charset "UTF-8";
+
+/* general */
+html {
+    color: #CCC;
+    background-color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+button {
+    font-size: larger;
+    color: mediumseagreen;
+    background-color: #666;
+    padding: 0.5em 2em;
+    border: 1px solid #555;
+    border-radius: 8px;
+    cursor: pointer;
+}
+button:hover {
+    color: mediumspringgreen;
+    background-color: #999;
+    border-color: #095;
+}
+button:active {
+    color: #222;
+    background-color: seagreen;
+    border-color: mediumseagreen;
+}
+
+a, a:visited {
+    color: cornflowerblue;
+    text-decoration: none;
+}
+a:hover {
+    color: lightskyblue;
+    text-decoration: solid;
+}
+a:active {
+    color: aqua;
+    text-decoration: solid;
+}
+/* syntax highlight */
+.hljs-ln-numbers {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    text-align: center;
+    color: #ccc;
+    border-right: 1px solid #CCC;
+    vertical-align: top;
+    padding-right: 5px;
+
+    /* your custom style here */
+}
+
+/* for block of code */
+.hljs-ln-code {
+    padding-left: 10px;
+}
+.hljs-ln td {
+    padding: 0 4px !important;
+}
+
+code[class*=language-], pre[class*=language-] {
+    line-height: 1.2 !important;
+}
+/* my css */
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: space-between;
+    justify-content: space-around;
+    align-items: stretch;
+    margin: 1em;
+}
+.code {
+    white-space: pre-wrap;
+    background-color: #222;
+}
+.codeblock {
+    width: 100%;
+}
+.button,.button:visited {
+    display: inline-flex;
+    border: 1px solid #222;
+    background-color: #555;
+    border-radius: 8px;
+    padding: 0.2em 0.5em;
+    margin: 0.1em 0.25em;
+    text-decoration: none;
+    color: skyblue;
+}
+.button:hover {
+    background-color: #66a;
+    color: aliceblue;
+    text-decoration: none;
+}
+.button:active {
+    background-color: #779;
+    color: royalblue;
+    text-decoration: none;
+}
+.head {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-content: space-around;
+    align-items: center;
+    padding: 1em;
+}
+.output {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding: 0.5em;
+}
+.output-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.25em;
+    border-top: 1px dashed #999;
+}
+.header {
+    display: flex;
+    align-content: space-around;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.25em;
+    width: 100%;
+}
+.header-text {
+    display: flex;
+    padding: 0 1em;
+}
+.header-buttons {
+    display: flex;
+    padding: 0 1em;
+    align-content: space-around;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    width: max-content;
+}
+.tail {
+    display: flex;
+    padding: 0.5em;
+}
+.curv {
+    padding: 0.5em;
+    margin: 0.25em;
+    border: 1px solid #555;
+    border-radius: 12px;
+}
+.input-block {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: stretch;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.feature-block {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-grow: 1;
+}
+.flex-column {
+    flex-direction: column;
+}
+.input-text {
+    background-color: #444;
+    color: #fff;
+    font-size: 105%;
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 0.25em;
+}
+.input-text:disabled {
+    background-color: #433;
+    color: #988;
+}
+.input-drop {
+    background-color: #555;
+    color: #fff;
+    font-size: 102.5%;
+    padding: 0.25em 1em;
+    border: 1px solid #555;
+    border-radius: 8px;
+}
+
+/* checkbox */
+.badge {
+	/*background-color: #f2eee0;*/
+	display: inline;
+	/*padding: 3px 8px;*/
+	margin: 0.15em 0.25em;
+	border-radius: 4px;
+}
+
+.toggler-wrapper {
+    display: flex;
+    cursor: pointer;
+    position: relative;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.toggler-wrapper input[type="checkbox"] {
+	display: none;
+}
+
+.toggler-wrapper input[type="checkbox"]:checked+.toggler-slider {
+	background-color: seagreen;
+}
+
+.toggler-wrapper .toggler-slider {
+	background-color: #777;
+	position: relative;
+	border-radius: 100px;
+	top: 0;
+	left: 0em;
+	width: 3em;
+	height: 1.33em;
+	-webkit-transition: all 300ms ease;
+	transition: all 300ms ease;
+}
+
+.toggler-wrapper .toggler-knob {
+	position: absolute;
+	-webkit-transition: all 300ms ease;
+	transition: all 300ms ease;
+}
+
+.toggler-wrapper.style-1 input[type="checkbox"]:checked+.toggler-slider .toggler-knob {
+	left: calc(100% - 1.3em);
+    background-color: lightgreen;
+}
+
+.toggler-wrapper.style-1 .toggler-knob {
+	width: calc(1.1em);
+	height: calc(1.1em);
+	border-radius: 50%;
+	left: 0.2em;
+	top: 0.1em;
+	background-color: #ccc;
+}

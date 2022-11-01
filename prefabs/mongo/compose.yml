@@ -1,0 +1,12 @@
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    volumes:
+      - data:/data/db
+    env_file:
+      - ./envs/mongo
+    networks:
+      - {{network_name}}
+    ports:
+      - "27017:27017"
+    restart: unless-stopped

@@ -1,0 +1,36 @@
+name: Deploy __TAG__ on __CONDITION_TEXT__
+on:
+  __CONDITION_CASE__
+
+jobs:
+  
+__JOBS_INCLUDE__
+
+  deploy:
+    name: deploy production
+    runs-on: ubuntu-latest
+    needs: [__NEEDS_DEPLOY__]
+    steps:
+      - name: Check Out Repo 
+        uses: actions/checkout@v3
+
+__GET_ENVS_INCLUDE__
+
+      - name: copy file via ssh key
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          source: "docker-compose.__TAG__.yml, envs/*"
+          target: "~/deploy/__TAG"
+
+      - name: deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          script: |
+            __PULLS__
+            docker-compose -f ~/deploy/__TAG/docker-compose.__TAG__.yml

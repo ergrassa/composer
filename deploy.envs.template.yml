@@ -1,0 +1,8 @@
+- name: Get secrets from hachicorp kv vault
+uses: ergrassa/vault-secrets-to-files@v1.0
+with:
+  url: '${{ secrets.VAULT_URL }}'
+  token: '${{ secrets.VAULT_TOKEN }}'
+  engine: '__VAULT_ENGINE__'
+  path: './envs'
+  debug: 'no'

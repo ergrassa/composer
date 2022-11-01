@@ -1,0 +1,11 @@
+  postgres:
+    image: postgres:15
+    networks:
+      - {{network_name}}
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+      - ./init_postgres.sql:/docker-entrypoint-initdb.d/init_postgres.sql
+    labels:
+      - io.portainer.accesscontrol.teams={{team}}
+    env_file:
+      - ./envs/postgres

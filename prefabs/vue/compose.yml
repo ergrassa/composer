@@ -1,0 +1,14 @@
+  frontend:
+    container_name: {{project}}-frontend
+    image: {{org}}/{{project}}-frontend:{{tag}}
+    ports:
+      - "8080:8080"
+    environment:
+      - VIRTUAL_HOST={{frontend}}{{domain}}
+      - LETSENCRYPT_HOST={{frontend}}{{domain}}
+      - LETSENCRYPT_EMAIL={{email}}
+    labels:
+      - io.portainer.accesscontrol.teams={{team}}
+    networks:
+      - proxy
+      - {{project}}

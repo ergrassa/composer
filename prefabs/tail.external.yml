@@ -1,0 +1,6 @@
+
+networks:
+  {{network_name}}:
+    external: true
+  proxy:
+    external: true
