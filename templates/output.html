@@ -13,6 +13,20 @@
 </head>
 <body>
 <script src="prism.js"></script>
+<script>
+    function download(elid){
+        console.log("Element " + elid)
+        var a = document.body.appendChild(
+            document.createElement("a")
+        );
+        const regex = /^data_/i
+        filename = elid.replace(regex, "")
+        console.log("downloading " + filename)
+        a.download = filename;
+        a.href = "data:text/yaml," + document.getElementById(elid).innerText;
+        a.click();
+    }    
+</script>
 <div class="container">
 <div class="head" id="back">
     <div class="head-buttons">
@@ -31,6 +45,7 @@
             <div class="header-text">{{ k }}</div>
             <div class="header-buttons">
                 <a href="#back" class="local button">↑Top</a>
+                <div onClick='download("data_{{ k }}")'><a class="local button">Download</a></div>
             </div>
         </div>
         <div class="codeblock">
@@ -42,5 +57,7 @@
 <div class="tail">
     <div class="header-buttons"><a href="#back" class="local button">↑Top</a></div>
 </div>
+<div class="tail" id="aaba" onClick="download('aaba')">
+    AAAAAA
 </div>
 </body>
