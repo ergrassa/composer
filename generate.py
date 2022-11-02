@@ -35,45 +35,16 @@ def create_template(fes = [], dbs = [], separate_db=False):
     compose['main'] += read_file('prefabs/tail.yml')
     if separate_db == True:
         compose['db'] += read_file('prefabs/tail.external.yml')
-    print(f"Generated\nFEA: {fes}\nDBS: {dbs}\nSDB: {separate_db}")
+    print(f"Generated compose\nFeatures: {fes}\nDatabases: {dbs}\nSeparate DB: {separate_db}")
     return compose
 
-def create_template2(
-    has_vue = False,
-    has_django = False,
-    has_nodejs = False,
-    has_postgres = False,
-    has_mongo = False,
-    has_mongors = False,
-    has_separate_db = False
-):
-    compose = { 'main': '', 'db': ''}
-    compose['main'] += read_file('prefabs/head.yml')
-    if has_vue == True:
-        compose['main'] += read_file('prefabs/vue/compose.yml')
-    if has_django == True:
-        compose['main'] += read_file('prefabs/django/compose.yml')
-    if has_nodejs == True:
-        compose['main'] += '\n#NodeJS here\n'
-    if has_separate_db == False:
-        if has_postgres == True:
-            compose['main'] += read_file('prefabs/postgres/compose.yml')
-        if has_mongo == True:
-            compose['main'] += '\n#MongoDB here\n'
-        if has_mongors == True:
-            compose['main'] += '\n#MongoDB Replica Set here\n'
-    else:
-        compose['db']  += read_file('prefabs/head.yml')
-        if has_postgres == True:
-            compose['db']  += read_file('prefabs/postgres/compose.yml')
-        if has_mongo == True:
-            compose['db']  += '\n#MongoDB here\n'
-        if has_mongors == True:
-            compose['db']  += '\n#MongoDB Replica Set here\n'
-        compose['db']  += read_file('prefabs/tail.external.yml')
-    compose['main'] += read_file('prefabs/tail.yml')
-    # re.sub(r"^\s+", '', compose)
-
-    return compose
+def create_workflow(fes = []):
+    workflow = ''
+    workflow += read_file('prefabs/workflow_head.yml')
+    for k in fes:
+        workflow += read_file(f"prefabs/{k}/workflow.yml")
+    workflow += read_file('prefabs/workflow_tail.yml')
+    print(f"Generated workflow\nFeatures: {fes}")
+    return workflow
 
 print('generate.py loaded')

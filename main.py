@@ -24,6 +24,12 @@ feat = {
         'mex': 'Mongo Express'
     }
 }
+images = {
+    'vue': 'frontend',
+    'vue-docs': 'docs',
+    'django': 'backend',
+    'nodejs': 'backend',
+}
 # kv = {
 #     'vue': 'Vue frontend',
 #     'django': 'Django backend',
@@ -78,14 +84,27 @@ def form():
             compose_name = f"docker-compose.{tag}.yml"
             db_compose_name = f"docker-compose.{tag}.db.yml"
             payload[compose_name] = template['main']
+            if tag != 'dev':
+                workflow_template = create_workflow(f_on)
+                workflow_name = f"deploy.{tag}.yml"
+                payload[f"{workflow_name}"] = workflow_template
             if data.get('has_separate_db') == True:
                 payload[db_compose_name] = template['db']
             if tag == 'staging':
                 suffix = '-staging'
+                branch = 'dev'
             elif tag == 'dev':
                 suffix = '-dev'
             else:
                 suffix = ''
+                branch = 'main'
+            pulls = ''
+            needs = '['
+            # {{org}}/{{project}}-frontend:{{tag}}
+            for f in f_on:
+                pulls += f"{' '*12}docker pull {data.get('org')}/{data.get('project')}-{images[f]}:{tag}\n"
+                needs += f"{images[f]}-build, "
+            needs = re.sub(r", $", ']', needs)
             repl = {
                 '{{version}}': data.get('compose_version'),
                 '{{org}}': data.get('org'),
@@ -100,13 +119,24 @@ def form():
                 '{{docs}}': f"{project}-docs{suffix}.",
                 '{{domain}}': data.get(f"vhost_{tag}"),
                 '{{pgadmin}}': f"{project}-pgadmin{suffix}.",
-                '{{mex}}': f"{project}-mex{suffix}."
+                '{{mex}}': f"{project}-mex{suffix}.",
+                '{{branch}}' : branch,
+                '{{engine}}' : data.get(f"engine_{tag}"),
+                '{{tag_upper}}' : tag.upper(),
+                '{{pulls}}' : pulls.rstrip(),
+                '{{needs}}' : needs
             }
+            if data.get(f"engine_{tag}") == '':
+                payload[workflow_name] = re.sub(r"#{{vault}}#.*#{{vaultend}}#", '', payload[workflow_name], flags=re.DOTALL)
+            print(payload.keys())
             for k,v in repl.items():
                 # print(f"{k} : {v}")
                 payload[compose_name] = re.sub(k, v, payload[compose_name])
                 if data.get('has_separate_db') == True:
                     payload[db_compose_name] = re.sub(k, v, payload[db_compose_name])
+                if tag != 'dev':
+                    for k,v in repl.items():
+                        payload[workflow_name] = re.sub(k, v, payload[workflow_name])
         return render_template('output.html', payload=payload)
     return render_template('index.html', feat=feat)
  

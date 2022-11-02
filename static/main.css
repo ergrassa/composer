@@ -199,6 +199,9 @@ code[class*=language-], pre[class*=language-] {
     border: 1px solid #555;
     border-radius: 8px;
 }
+.hidden {
+    display: none;
+}
 
 /* checkbox */
 .badge {

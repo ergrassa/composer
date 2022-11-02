@@ -1,0 +1,8 @@
+name: deploy {{tag}}
+on:
+  push:
+    branches:
+      - {{branch}}
+  workflow_dispatch:
+
+jobs:

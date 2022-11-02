@@ -1,0 +1,30 @@
+# Frontend {{tag_upper}} build
+  frontend-build:
+  runs-on: ubuntu-latest
+
+  steps:
+    - name: Check Out Repo
+      uses: actions/checkout@v3
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v3
+      with:
+        context: ./frontend/
+        file: ./frontend/Dockerfile.{{tag}}
+        build-args: |
+          BUILDMODE={{tag}}
+        # or staging or whatever
+        push: true
+        tags: {{org}}/{{project}}-frontend:{{tag}}
+# Frontend {{tag_upper}} build end

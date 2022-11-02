@@ -10,9 +10,11 @@
     if (document.getElementById("has_{{ e }}").checked) {
         console.log('checked has_{{ e }}')
         document.getElementById("vhost_{{ e }}").disabled = false;
+        document.getElementById("engine_{{ e }}").disabled = false;
     } else {
         console.log('unchecked has_{{ e }}')
         document.getElementById("vhost_{{ e }}").disabled = true;
+        document.getElementById("engine_{{ e }}").disabled = true;
     }
     }
     {% endfor %}
@@ -68,10 +70,19 @@
 
 
     <fieldset class="input-block curv">
-        <legend>Virtual host setup</legend>
+        <legend>Environment setup</legend>
         {% for k,v in envs.items() %}
-                <label>{{ v }} hostname: 
-                    <input type="text" name="vhost_{{ k }}" id="vhost_{{ k }}" disabled="True" value="center-game.com" class="input-text"></label>
+            <fieldset class="feature-block curv">
+            <legend>{{ v }}</legend>
+                <label>Virtual host domain: 
+                <input type="text" name="vhost_{{ k }}" id="vhost_{{ k }}" disabled="True" value="center-game.com" class="input-text">
+                </label>
+                {% if k == 'dev' %}<div class="hidden">{% endif %}
+                <label>Vault engine <small>(leave blank if not used)</small>
+                <input type="text" name="engine_{{ k }}" id="engine_{{ k }}" disabled="True" value="" class="input-text">
+                </label>
+                {% if k == 'dev' %}</div>{% endif %}
+            </fieldset>
         {% endfor %}
     </fieldset>
 

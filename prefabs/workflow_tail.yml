@@ -1,0 +1,36 @@
+  deploy:
+    name: deploy {{tag}}
+    runs-on: ubuntu-latest
+    needs: {{needs}}
+    steps:
+      - name: Check Out Repo 
+        uses: actions/checkout@v3
+#{{vault}}#
+      - name: Get secrets from hachicorp kv vault
+        uses: ergrassa/vault-secrets-to-files@v1.0
+        with:
+          url: '${{ secrets.VAULT_URL }}'
+          token: '${{ secrets.VAULT_{{tag_upper}}_TOKEN }}'
+          engine: '{{engine}}'
+          path: './envs'
+          debug: 'no'
+#{{vaultend}}#
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.{{tag_upper}}_HOST }}
+          username: ${{ secrets.{{tag_upper}}_USER }}
+          key: ${{ secrets.{{tag_upper}}_PRIVATE_KEY }}
+          source: "docker-compose.{{tag}}.yml,envs/"
+          target: "~/deploy/{{tag}}" 
+
+      - name: deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.{{tag_upper}}_HOST }}
+          username: ${{ secrets.{{tag_upper}}_USER }}
+          key: ${{ secrets.{{tag_upper}}_PRIVATE_KEY }}
+          script: |
+{{pulls}}
+            cd ~/deploy/{{tag}}
+            docker-compose -f ~/deploy/{{tag}}/docker-compose.{{tag}}.yml up -d --force-recreate
