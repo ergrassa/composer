@@ -10,6 +10,9 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
+<link href="/css/fontawesome.css" rel="stylesheet">
+<link href="/css/brands.css" rel="stylesheet">
+<link href="/css/solid.css" rel="stylesheet">
 </head>
 <body>
 <script src="prism.js"></script>
@@ -34,7 +37,7 @@
     </div>
     <div class="alist">
     {% for k in payload.keys() %}
-        <a href="#header_{{ k }}" class="local button">{{ k }}</a>
+        <a href="#header_{{ k }}" class="local button" id="button_{{ k }}">{{ k }}</a>
     {% endfor %}
     </div>
 </div>
@@ -42,14 +45,14 @@
     {% for k,v in payload.items() %}
     <div class="output-block">
         <div id="header_{{ k }}" class="header">
-            <div class="header-text">{{ k }}</div>
+            <div class="header-text" id="headertext_{{ k }}">{{ k }}</div>
             <div class="header-buttons">
                 <a href="#back" class="local button">↑Top</a>
                 <div onClick='download("data_{{ k }}")'><a class="local button">Download</a></div>
             </div>
         </div>
-        <div class="codeblock">
-            <pre class="code"><code class="language-yaml line-numbers" id="data_{{ k }}">{{ v }}</code></pre>
+        <div class="codeblock" id="codeblock_{{ k }}">
+            <pre class="code" id="code_{{ k }}"><code class="language-yaml line-numbers" id="data_{{ k }}">{{ v }}</code></pre>
         </div>
     </div>
     {% endfor %}

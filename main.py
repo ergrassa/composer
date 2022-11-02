@@ -1,6 +1,7 @@
 
 from flask import Flask, request, render_template, Response
 from generate import *
+import collections
 
 app = Flask(__name__,
             static_url_path='', static_folder='static')  
@@ -137,7 +138,8 @@ def form():
                 if tag != 'dev':
                     for k,v in repl.items():
                         payload[workflow_name] = re.sub(k, v, payload[workflow_name])
-        return render_template('output.html', payload=payload)
+        sorted_payload = dict(sorted(payload.items()))
+        return render_template('output.html', payload=sorted_payload)
     return render_template('index.html', feat=feat)
  
 if __name__=='__main__':

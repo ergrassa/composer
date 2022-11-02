@@ -260,3 +260,95 @@ code[class*=language-], pre[class*=language-] {
 	top: 0.1em;
 	background-color: #ccc;
 }
+/* deploys github */
+[id*=codeblock_deploy] {
+    background-color: #465 !important;
+}
+[id*=code_deploy] {
+    background-color: #2d302d !important;
+}
+[id*=headertext_deploy] {
+    color: #efe;
+}
+[id*=headertext_deploy]::before {
+    font-family: "Font Awesome 6 Brands";
+    content: "\f09b";
+    display: inline;
+    padding-right: 0.5em;
+    font-size: x-large;
+}
+[id*=button_deploy] {
+    color: #cec !important;
+    background-color: #465 !important;
+}
+[id*=button_deploy]::before {
+    font-family: "Font Awesome 6 Brands";
+    content: "\f09b";
+    display: inline;
+    padding-right: 0.5em;
+    margin-top: 0.15em;
+}
+
+/* composes docker */
+[id*=codeblock_docker]:not([id*=db]) {
+    background-color: #446 !important;
+}
+[id*=code_docker]:not([id*=db]) {
+    background-color: #2d2d33 !important;
+}
+[id*=headertext_docker]:not([id*=db]) {
+    color: #eef;
+}
+[id*=headertext_docker]:not([id*=db])::before {
+    font-family: "Font Awesome 6 Brands";
+    content: "\f395";
+    display: inline;
+    padding-right: 0.5em;
+    font-size: x-large;
+}
+[id*=button_docker]:not([id*=db]) {
+    color: #bdf !important;
+    background-color: #346 !important;
+}
+[id*=button_docker]:not([id*=db])::before {
+    font-family: "Font Awesome 6 Brands";
+    content: "\f395";
+    display: inline;
+    padding-right: 0.5em !important;
+    margin-top: 0.15em !important;
+}
+
+/* composes database */
+[id*=codeblock_docker][id*=db] {
+    background-color: #554 !important;
+}
+[id*=code_docker][id*=db] {
+    background-color: #30302d !important;
+}
+[id*=headertext_docker][id*=db] {
+    color: #fee;
+}
+[id*=headertext_docker][id*=db]::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f1c0";
+    display: inline;
+    padding-right: 0.5em;
+    font-size: x-large;
+}
+[id*=button_docker][id*=db] {
+    color: #fdd !important;
+    background-color: #654 !important;
+}
+[id*=button_docker][id*=db]::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f1c0";
+    display: inline;
+    padding-right: 0.5em;
+    margin-top: 0.15em;
+}
+[id*=button_]:hover {
+    filter:brightness(1.2) saturate(1.3) !important;
+}
+[id*=button_]:active {
+    filter:brightness(0.8) saturate(0.7) !important;
+}
