@@ -16,45 +16,62 @@
 </head>
 <body>
 <script src="prism.js"></script>
+<script src="jszip.min.js"></script>
+<script src="FileSaver.min.js"></script>
 <script>
-    function download(elid){
-        console.log("Element " + elid)
-        var a = document.body.appendChild(
-            document.createElement("a")
-        );
-        const regex = /^data_/i
-        filename = elid.replace(regex, "")
-        console.log("downloading " + filename)
-        a.download = filename;
-        a.href = "data:text/yaml," + document.getElementById(elid).innerText;
+    function download(elid) {
+        var a = document.createElement('a');
+        var c = document.getElementById(elid).innerText;
+        var filename = elid.replace(/^data_/i, "")
+        a.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(c));
+        a.setAttribute('download', filename);
+        console.log("Downloading " + filename)
+        a.style.display = 'none';
+        document.body.appendChild(a);
+      
         a.click();
+      
         document.body.removeChild(a);
-    }
+      }
 </script>
 <script>
     function zipall(){
         console.log("Zipall")
-        var a = document.body.appendChild(
-            document.createElement("a")
-        );
-        var files = {{ payload | tojson | safe }};
-        console.log(files["deploy.staging.yml"])
-        a.download = "deploy.staging.yml";
-        a.href = "data:text/html," + files["deploy.staging.yml"];
-        a.click();
-        document.body.removeChild(a);
+        const zip = new JSZip();
+        const files = {{ payload | tojson | safe }};
+        const timeStamp = (new Date()).toISOString().replace(/[-:]|(\..+)/g, '').replace('T','-');
+        console.log(timeStamp);
+        for (var f in files) {
+            switch (true) {
+                case f.startsWith('deploy'):
+                    var deploy = zip.folder(".github/workflow");
+                    deploy.file(f, files[f]);
+                    break;
+                case f.startsWith('docker-compose'):
+                    zip.file(f, files[f]);
+                    break;
+                default:
+                    console.log('unexpected file, passing');
+            }
+        };
+        zip.generateAsync({type:"blob"}).then(function(content) {
+            saveAs(content, "composed-" + timeStamp + ".zip");
+        });
     }
 </script>
 <div class="container">
-    <div class="head opossum" onClick="zipall()"></div>
+<!--    <div class="head opossum" onClick="zipall()"></div> -->
 <div class="head" id="back">
     <div class="head-buttons">
-        <a href="/" class="button">Back</a>
+        <a href="/" class="button back">Back</a>
     </div>
     <div class="alist">
     {% for k in payload.keys() %}
-        <a href="#header_{{ k }}" class="local button" id="button_{{ k }}">{{ k }}</a>
+        <a href="#header_{{ k }}" class="local button aitem" id="button_{{ k }}">{{ k }}</a>
     {% endfor %}
+    </div>
+    <div class="head-buttons">
+        <div onClick='zipall()'><a class="local button zip">Download all as zip</a></div>
     </div>
 </div>
 <div class="output">
@@ -64,7 +81,7 @@
             <div class="header-text" id="headertext_{{ k }}">{{ k }}</div>
             <div class="header-buttons">
                 <a href="#back" class="local button">↑Top</a>
-                <div onClick='download("data_{{ k }}")'><a class="local button">Download</a></div>
+                <div onClick='download("data_{{ k }}")'><a class="local button">Download&nbsp;&nbsp;<small>{{ k }}</small></a></div>
             </div>
         </div>
         <div class="codeblock" id="codeblock_{{ k }}">
