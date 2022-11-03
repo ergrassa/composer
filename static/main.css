@@ -152,6 +152,7 @@ code[class*=language-], pre[class*=language-] {
 }
 .tail {
     display: flex;
+    justify-content: center;
     padding: 0.5em;
 }
 .curv {
@@ -351,4 +352,26 @@ code[class*=language-], pre[class*=language-] {
 }
 [id*=button_]:active {
     filter:brightness(0.8) saturate(0.7) !important;
+}
+.invis {
+    opacity: 0;
+    font-size: 1%;
+}
+.opossum {
+    background-image: url('opossum.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 6em;
+    height: 6em;
+    opacity: 0.1;
+}
+.opossum:hover {
+    opacity: 1;
+}
+.version {
+    color:#555;
+    font-size: small;
+}
+.version:hover {
+    color: #7af;
 }

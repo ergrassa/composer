@@ -1,7 +1,11 @@
 
 from flask import Flask, request, render_template, Response
 from generate import *
-import collections
+import os, time
+
+(mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os.stat('./version')
+with open('./version', 'r') as f:
+    version = f"{str(f.read())} of {time.ctime(mtime)}"
 
 app = Flask(__name__,
             static_url_path='', static_folder='static')  
@@ -143,8 +147,8 @@ def form():
             payload[k] = re.sub(r"#{{.+?}}#\n", '', payload[k])
             payload[k] = re.sub(r"^\s*\n", '', payload[k], flags=re.MULTILINE)
         sorted_payload = dict(sorted(payload.items()))
-        return render_template('output.html', payload=sorted_payload)
-    return render_template('index.html', feat=feat)
+        return render_template('output.html', payload=sorted_payload, version=version)
+    return render_template('index.html', feat=feat, version=version)
  
 if __name__=='__main__':
 #    app.run()
