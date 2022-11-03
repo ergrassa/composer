@@ -1,5 +1,12 @@
   backend:
+#{{hosted}}#
     image: {{org}}/{{project}}-backend:{{tag}}
+#{{endhosted}}#
+#{{local}}#
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile.local
+#{{endlocal}}#
     networks:
       - proxy
       - {{network_name}}
@@ -10,5 +17,10 @@
       - VIRTUAL_HOST={{backend}}{{domain}}
     volumes:
         - ./images:/app/public/images
+#{{local}}#
+        - ./backend:/app
+        - /app/node_modules
+    command: /bin/bash -c "yarn && yarn dev"
+#{{endlocal}}#
     expose:
       - 80

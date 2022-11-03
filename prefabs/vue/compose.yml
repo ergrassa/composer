@@ -1,6 +1,13 @@
   frontend:
     container_name: {{project}}-frontend
+#{{hosted}}#
     image: {{org}}/{{project}}-frontend:{{tag}}
+#{{endhosted}}#
+#{{local}}#
+    build:
+      context: ./frontend
+      dockerfile: ./frontend/Dockerfile.local
+#{{endlocal}}#
     ports:
       - "8080:8080"
     environment:

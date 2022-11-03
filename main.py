@@ -81,7 +81,7 @@ def form():
 
         payload = {}
         for tag in envs:
-            template = create_template(f_on, db_on, data.get('has_separate_db'))
+            template = create_template(f_on, db_on, data.get('has_separate_db'), tag = tag)
             compose_name = f"docker-compose.{tag}.yml"
             db_compose_name = f"docker-compose.{tag}.db.yml"
             payload[compose_name] = template['main']
@@ -96,6 +96,7 @@ def form():
                 branch = 'dev'
             elif tag == 'dev':
                 suffix = '-dev'
+                branch = ''
             else:
                 suffix = ''
                 branch = 'main'
@@ -127,8 +128,8 @@ def form():
                 '{{pulls}}' : pulls.rstrip(),
                 '{{needs}}' : needs
             }
-            if data.get(f"engine_{tag}") == '':
-                payload[workflow_name] = re.sub(r"#{{vault}}#.*#{{vaultend}}#", '', payload[workflow_name], flags=re.DOTALL)
+            if (data.get(f"engine_{tag}") == '') and (tag != 'dev'):
+                payload[workflow_name] = re.sub(r"#{{vault}}#.*?#{{vaultend}}#", '', payload[workflow_name], flags=re.DOTALL)
             print(payload.keys())
             for k,v in repl.items():
                 # print(f"{k} : {v}")
@@ -138,6 +139,9 @@ def form():
                 if tag != 'dev':
                     for k,v in repl.items():
                         payload[workflow_name] = re.sub(k, v, payload[workflow_name])
+        for k in payload.keys():
+            payload[k] = re.sub(r"#{{.+?}}#\n", '', payload[k])
+            payload[k] = re.sub(r"^\s*\n", '', payload[k], flags=re.MULTILINE)
         sorted_payload = dict(sorted(payload.items()))
         return render_template('output.html', payload=sorted_payload)
     return render_template('index.html', feat=feat)

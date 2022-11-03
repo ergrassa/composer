@@ -19,7 +19,7 @@ def read_file(file):
         content = f.read()
     return content
 
-def create_template(fes = [], dbs = [], separate_db=False):
+def create_template(fes = [], dbs = [], separate_db=False, tag=''):
     compose = { 'main': '', 'db': '' }
     compose['main'] += read_file('prefabs/head.yml')
     for k in fes:
@@ -35,10 +35,15 @@ def create_template(fes = [], dbs = [], separate_db=False):
     compose['main'] += read_file('prefabs/tail.yml')
     if separate_db == True:
         compose['db'] += read_file('prefabs/tail.external.yml')
+    if tag == 'dev':
+        print()
+        compose['main'] = re.sub(r"#{{hosted}}#.*?#{{endhosted}}#", '', compose['main'], flags=re.DOTALL)
+    else:
+        compose['main'] = re.sub(r"#{{local}}#.*?#{{endlocal}}#", '', compose['main'], flags=re.DOTALL)
     print(f"Generated compose\nFeatures: {fes}\nDatabases: {dbs}\nSeparate DB: {separate_db}")
     return compose
 
-def create_workflow(fes = []):
+def create_workflow(fes = [], tag = ''):
     workflow = ''
     workflow += read_file('prefabs/workflow_head.yml')
     for k in fes:

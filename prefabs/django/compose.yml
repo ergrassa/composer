@@ -1,5 +1,12 @@
   backend:
+#{{hosted}}#
     image: {{org}}/{{project}}-backend:{{tag}}
+#{{endhosted}}#
+#{{local}}#
+    build:
+      context: ./backend
+      dockerfile: ./backend/Dockerfile.local
+#{{endlocal}}#
     container_name: {{project}}-django-backend
     networks:
       - {{network_name}}
