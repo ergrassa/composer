@@ -145,7 +145,7 @@ def form():
                         payload[workflow_name] = re.sub(k, v, payload[workflow_name])
         for k in payload.keys():
             payload[k] = re.sub(r"#{{.+?}}#\n", '', payload[k])
-            payload[k] = re.sub(r"^\s*\n", '', payload[k], flags=re.MULTILINE)
+            # payload[k] = re.sub(r"^\s*\n", '', payload[k], flags=re.MULTILINE)
         sorted_payload = dict(sorted(payload.items()))
         return render_template('output.html', payload=sorted_payload, version=version)
     return render_template('index.html', feat=feat, version=version)

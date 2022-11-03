@@ -28,9 +28,25 @@
         a.download = filename;
         a.href = "data:text/yaml," + document.getElementById(elid).innerText;
         a.click();
-    }    
+        document.body.removeChild(a);
+    }
+</script>
+<script>
+    function zipall(){
+        console.log("Zipall")
+        var a = document.body.appendChild(
+            document.createElement("a")
+        );
+        var files = {{ payload | tojson | safe }};
+        console.log(files["deploy.staging.yml"])
+        a.download = "deploy.staging.yml";
+        a.href = "data:text/html," + files["deploy.staging.yml"];
+        a.click();
+        document.body.removeChild(a);
+    }
 </script>
 <div class="container">
+    <div class="head opossum" onClick="zipall()"></div>
 <div class="head" id="back">
     <div class="head-buttons">
         <a href="/" class="button">Back</a>
