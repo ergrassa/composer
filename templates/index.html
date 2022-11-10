@@ -85,9 +85,26 @@
             </fieldset>
         {% endfor %}
     </fieldset>
-
     <fieldset class="input-block curv">
-        <legend>Additional options</legend>
+        <legend>Files to generate</legend>
+        <label class="toggler-wrapper style-1">
+            <input type="checkbox" name="has_dockerfile" id="has_dockerfile" checked>
+            <div class="toggler-slider"><div class="toggler-knob"></div></div>
+            <div class="badge">Dockerfiles</div>
+        </label>
+        <label class="toggler-wrapper style-1">
+            <input type="checkbox" name="has_compose" id="has_compose" checked>
+            <div class="toggler-slider"><div class="toggler-knob"></div></div>
+            <div class="badge">Docker-compose files</div>
+        </label>
+        <label class="toggler-wrapper style-1">
+            <input type="checkbox" name="has_deploy" id="has_deploy" checked>
+            <div class="toggler-slider"><div class="toggler-knob"></div></div>
+            <div class="badge">Github deploy actions</div>
+        </label>
+    </fieldset>
+    <fieldset class="input-block curv">
+        <legend>Additional composing options</legend>
         <label>Network name <small>(leave blank to use project name): </small><input type="text" name="network_name" class="input-text"></label>
         
         

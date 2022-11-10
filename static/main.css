@@ -15,6 +15,7 @@ button {
     border: 1px solid #555;
     border-radius: 8px;
     cursor: pointer;
+    width: max-content;
 }
 button:hover {
     color: mediumspringgreen;
@@ -351,6 +352,62 @@ code[class*=language-], pre[class*=language-] {
     display: inline;
     padding-right: 0.25em;
 }
+/* dockerfiles */
+[id*=codeblock_][id*=Dockerfile] {
+    background-color: #456 !important;
+}
+[id*=code_][id*=Dockerfile] {
+    background-color: #2d2d33 !important;
+}
+[id*=headertext_][id*=Dockerfile] {
+    color: #def;
+}
+[id*=headertext_][id*=Dockerfile]::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f15c";
+    display: inline;
+    padding-right: 0.25em;
+    font-size: x-large;
+}
+[id*=button_][id*=Dockerfile] {
+    color: #cdf !important;
+    background-color: #456 !important;
+}
+[id*=button_][id*=Dockerfile]::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f15c";
+    display: inline;
+    padding-right: 0.25em;
+}
+
+
+/* all other */
+[id*=codeblock_] {
+    background-color: #667 !important;
+}
+[id*=code_] {
+    background-color: #2d2d2d !important;
+}
+[id*=headertext_] {
+    color: #ccc;
+}
+[id*=headertext_]::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f1c9";
+    display: inline;
+    padding-right: 0.25em;
+    font-size: x-large;
+}
+[id*=button_] {
+    color: #ccc;
+    background-color: #556;
+}
+[id*=button_]::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f1c9";
+    display: inline;
+    padding-right: 0.25em;
+}
 [id*=button_]:hover {
     filter:brightness(1.2) saturate(1.3) !important;
 }
@@ -409,4 +466,77 @@ code[class*=language-], pre[class*=language-] {
     flex: 1 1 0px;
     flex-grow: 1;  
     flex-basis: 20%;
+}
+.block-button {
+    width: 9ch;
+}
+.block-button:active {
+    color: mediumseagreen;
+    background-color: seagreen;
+}
+.top {
+    width: 9ch;
+}
+.top::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f106";
+    display: flex;
+    font-size: 1.5em;
+    padding-right: 0.5em;
+    opacity: 0.5;
+    width: 2ch;
+}
+.top:active::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f102";
+    display: flex;
+    font-size: 1.5em;
+    padding-right: 0.5em;
+    opacity: 1;
+    width: 2ch;
+    color: palegreen;
+}
+.download {
+    width: 32ch;
+}
+.download::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f56d";
+    display: flex;
+    font-size: 1.5em;
+    padding-right: 0.5em;
+    opacity: 0.5;
+    width: 2ch;
+}
+.download:active::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\e5a0";
+    display: flex;
+    font-size: 1.5em;
+    padding-right: 0.5em;
+    opacity: 1;
+    width: 2ch;
+    color: palegreen;
+}
+.copy {
+    width: 12ch;
+}
+.copy::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f0c5";
+    display: flex;
+    font-size: 1.5em;
+    padding-right: 0.5em;
+    opacity: 0.5;
+    width: 2ch;
+}
+.copy:active::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f14a";
+    display: flex;
+    font-size: 1.5em;
+    padding-right: 0.5em;
+    opacity: 1;
+    width: 2ch;
+    color: palegreen;
 }

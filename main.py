@@ -110,6 +110,11 @@ def form():
             for f in f_on:
                 pulls += f"{' '*12}docker pull {data.get('org')}/{data.get('project')}-{images[f]}:{tag}\n"
                 needs += f"{images[f]}-build, "
+                dockerfile_template = create_dockerfile(f, tag)
+                payload[f"{images[f]}/{dockerfile_template['name']}"] = dockerfile_template['content']
+                match f:
+                    case 'nodejs':
+                        payload[f"{images[f]}/nginx.conf"] = read_file('prefabs/nodejs/nginx.conf')
             needs = re.sub(r", $", ']', needs)
             repl = {
                 '{{version}}': data.get('compose_version'),

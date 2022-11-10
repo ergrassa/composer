@@ -35,19 +35,32 @@
       }
 </script>
 <script>
+    function copyData(elid) {
+        var c = document.getElementById(elid).innerText;
+        navigator.clipboard.writeText(c);
+        console.log("Copied " + elid + "to clipboard")
+    }
+</script>
+<script>
     function zipall(){
         console.log("Zipall")
         const zip = new JSZip();
         const files = {{ payload | tojson | safe }};
         const timeStamp = (new Date()).toISOString().replace(/[-:]|(\..+)/g, '').replace('T','-');
+        const okFiles = ["Dockerfile", "nginx.conf"]
         console.log(timeStamp);
         for (var f in files) {
+            console.log(f)
+            console.log(okFiles.some(e => f.includes(e)))
             switch (true) {
                 case f.startsWith('deploy'):
                     var deploy = zip.folder(".github/workflow");
                     deploy.file(f, files[f]);
                     break;
                 case f.startsWith('docker-compose'):
+                    zip.file(f, files[f]);
+                    break;
+                case okFiles.some(e => f.includes(e)):
                     zip.file(f, files[f]);
                     break;
                 default:
@@ -80,8 +93,11 @@
         <div id="header_{{ k }}" class="header">
             <div class="header-text" id="headertext_{{ k }}">{{ k }}</div>
             <div class="header-buttons">
-                <a href="#back" class="local button">↑Top</a>
-                <div onClick='download("data_{{ k }}")'><a class="local button">Download&nbsp;&nbsp;<small>{{ k }}</small></a></div>
+                <a href="#back" class="local button block-button top">Top</a>
+                <div onClick='download("data_{{ k }}")'>
+                    <a class="local button download block-button">Download&nbsp;&nbsp;<small>{{ k }}</small></a>
+                </div>
+                <div onClick='copyData("data_{{ k }}")'><a class="local button block-button copy">Copy</a></div>
             </div>
         </div>
         <div class="codeblock" id="codeblock_{{ k }}">
@@ -91,7 +107,7 @@
     {% endfor %}
 </div>
 <div class="tail">
-    <div class="header-buttons"><a href="#back" class="local button">↑Top</a></div>
+    <div class="header-buttons"><a href="#back" class="local button top block-button">Top</a></div>
 </div>
 <div class="tail version">version {{ version }}</div>
 <div class="tail" id="aaa.txt" onClick="download('aaa.txt')">
