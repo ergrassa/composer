@@ -4,7 +4,6 @@
 <title>Compose generator (output)</title>
 <meta charset=utf-8>
 
-<link rel="stylesheet" href="main.css">
 <link href="prism.css" rel="stylesheet" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -13,6 +12,7 @@
 <link href="/css/fontawesome.css" rel="stylesheet">
 <link href="/css/brands.css" rel="stylesheet">
 <link href="/css/solid.css" rel="stylesheet">
+<link rel="stylesheet" href="main.css">
 </head>
 <body>
 <script src="prism.js"></script>
@@ -101,7 +101,14 @@
             </div>
         </div>
         <div class="codeblock" id="codeblock_{{ k }}">
-            <pre class="code" id="code_{{ k }}"><code class="language-yaml line-numbers" id="data_{{ k }}">{{ v }}</code></pre>
+            {% if '.yml' in k %}
+                {% set lang='yaml' %}
+            {% elif 'Dockerfile' in k %}
+                {% set lang='docker' %}
+            {% elif 'nginx.conf' in k %}
+                {% set lang='nginx' %}
+            {% endif %}
+            <pre class="code" id="code_{{ k }}"><code class="language-{{ lang }} line-numbers" id="data_{{ k }}">{{ v }}</code></pre>
         </div>
     </div>
     {% endfor %}

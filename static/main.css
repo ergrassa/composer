@@ -19,7 +19,7 @@ button {
 }
 button:hover {
     color: mediumspringgreen;
-    background-color: #999;
+    background-color: #444;
     border-color: #095;
 }
 button:active {
@@ -82,6 +82,7 @@ code[class*=language-], pre[class*=language-] {
 .code {
     white-space: pre-wrap;
     background-color: #222;
+    font-family: 'Times New Roman', Times, serif;
 }
 .codeblock {
     width: 100%;
@@ -106,9 +107,11 @@ code[class*=language-], pre[class*=language-] {
     background-color: #66a;
     color: aliceblue;
     text-decoration: none;
+    border: 1px solid #777;
 }
 .button:active {
     background-color: #779;
+    border: 1px solid #ccf;
     color: royalblue;
     text-decoration: none;
 }
@@ -436,19 +439,23 @@ code[class*=language-], pre[class*=language-] {
 .version:hover {
     color: #7af;
 }
+.zip {
+    color:palegoldenrod;
+    background-color: #775;
+}
+.zip:hover {
+    color: #ffc;
+    background-color: #997;
+    border-color: #cc9;
+}
+.zip:active {
+    color: goldenrod;
+    background-color: #552;
+    border-color: #ff9;
+}
 .zip::before {
     font-family: "Font Awesome 6 Free";
     content: "\f1c6";
-    display: flex;
-    font-size: 2em;
-    padding-right: 0.5em;
-}
-.back {
-    align-self: center;
-}
-.back::before {
-    font-family: "Font Awesome 6 Free";
-    content: "\f04a";
     display: flex;
     font-size: 2em;
     padding-right: 0.5em;
@@ -539,4 +546,26 @@ code[class*=language-], pre[class*=language-] {
     opacity: 1;
     width: 2ch;
     color: palegreen;
+}
+.back {
+    align-self: center;
+    background-color: #731 !important;
+    color: #e71 !important;
+}
+.back:hover {
+    background-color: #942 !important;
+    color: #f94 !important;
+    border-color: #f83 !important;
+}
+.back:active {
+    background-color: #510 !important;
+    color: #841 !important;
+    border-color: #fa5 !important;
+}
+.back::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f04a";
+    display: flex;
+    font-size: 2em;
+    padding-right: 0.5em;
 }
