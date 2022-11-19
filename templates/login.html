@@ -1,0 +1,30 @@
+<!doctype html>
+
+<head>
+<title>Compose generator</title> 
+<meta charset=utf-8>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link href="/css/fontawesome.css" rel="stylesheet">
+<link href="/css/brands.css" rel="stylesheet">
+<link href="/css/solid.css" rel="stylesheet">
+<link rel="stylesheet" href="../main.css">
+</head>
+
+<body>
+    <div class="head">{{ alert }}</div>
+    <form action="{{ url_for('simplelogin.login') }}" method="post" class="container">
+    {{ form.csrf_token }}
+    <fieldset class="input-block curv flex-column">
+        <legend align="center">Enter access token</legend>
+        {{ form.password }}
+        <input type="text" name="username" id="username" value="root" hidden>
+        </label>
+            <button type="submit" class="button login more-margin-vert">Login</button>
+    </fieldset>
+    </form>
+    <div class="tail version">version {{ version() }}</div>
+
+</body>

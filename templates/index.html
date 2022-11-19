@@ -1,7 +1,11 @@
 <!doctype html>
 {% set envs = {'production': 'Production', 'staging': 'Staging', 'dev': 'Dev/local'} %}
-<link rel="stylesheet" href="main.css">
+
 <head>
+<link rel="stylesheet" href="main.css">
+<link href="/css/fontawesome.css" rel="stylesheet">
+<link href="/css/brands.css" rel="stylesheet">
+<link href="/css/solid.css" rel="stylesheet">
 <title>Compose generator</title> 
 <meta charset=utf-8>
 <script>
@@ -27,8 +31,12 @@
 </head>
 
 <body>
-
-    <form action="{{ url_for("form")}}" method="post" class="container">
+    <div class="head less-gap-bottom" id="back">
+        <div class="head-buttons">
+            <a href="/logout" class="button back logout">Log out</a>
+        </div>
+    </div>
+    <form action="{{ url_for("form")}}" method="post" class="container less-gap-top">
 
     <fieldset class="input-block curv">
         <legend>General</legend>
@@ -143,5 +151,5 @@
         <button type="submit">Generate</button>
     </div>
     </form>
-    <div class="tail version">version {{ version }}</div>
+    <div class="tail version">version {{ version() }}</div>
 </body>

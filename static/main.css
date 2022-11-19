@@ -57,7 +57,6 @@ a:active {
 
     /* your custom style here */
 }
-
 /* for block of code */
 .hljs-ln-code {
     padding-left: 10px;
@@ -78,6 +77,21 @@ code[class*=language-], pre[class*=language-] {
     justify-content: space-around;
     align-items: stretch;
     margin: 1em;
+}
+.less-gap-top {
+    margin-top: 0.2em !important;
+}
+.less-gap-bottom {
+    margin-bottom: 0.2em !important;
+    padding-bottom: 0em !important;
+}
+.more-margin-vert {
+    margin-top: 1em !important;
+    margin-bottom: 1em !important;
+}
+.more-padding-vert {
+    padding-top: 1.5em !important;
+    padding-bottom: 1.5em !important;
 }
 .code {
     white-space: pre-wrap;
@@ -190,13 +204,17 @@ code[class*=language-], pre[class*=language-] {
 .flex-column {
     flex-direction: column;
 }
-.input-text {
+#password, .input-text {
     background-color: #444;
     color: #fff;
     font-size: 105%;
     border: 1px solid #555;
     border-radius: 8px;
     padding: 0.25em;
+}
+#password {
+    width: 96ex;
+    padding: 0.5em 1em;
 }
 .input-text:disabled {
     background-color: #433;
@@ -435,6 +453,7 @@ code[class*=language-], pre[class*=language-] {
 .version {
     color:#555;
     font-size: small;
+    padding: 2em;
 }
 .version:hover {
     color: #7af;
@@ -568,4 +587,24 @@ code[class*=language-], pre[class*=language-] {
     display: flex;
     font-size: 2em;
     padding-right: 0.5em;
+}
+.logout::before {
+    content: '';
+}
+.logout::after {
+    font-family: "Font Awesome 6 Free";
+    content: "\f2f5";
+    display: flex;
+    font-size: 2em;
+    padding-left: 0.5em;
+}
+.login::before {
+    content: '';
+}
+.login::after {
+    font-family: "Font Awesome 6 Free";
+    content: "\f2f6";
+    display: flex;
+    font-size: 2em;
+    padding-left: 0.5em;
 }

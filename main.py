@@ -1,14 +1,50 @@
 
-from flask import Flask, request, render_template, Response
+from flask import Flask, request, render_template, session, redirect, url_for
+from flask_simplelogin import SimpleLogin, login_required, is_logged_in
+
 from generate import *
 import os, time
+import rstr
 
-(mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os.stat('./version')
-with open('./version', 'r') as f:
-    version = f"{str(f.read())} of {time.ctime(mtime)}"
+def version():
+    version = 'None'
+    message = ''
+    (mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os.stat('./version')
+    with open('./version', 'r') as f:
+        version = f"{str(f.read())} of {time.ctime(mtime)}"
+    return version
 
 app = Flask(__name__,
-            static_url_path='', static_folder='static')  
+            static_url_path='', static_folder='static')
+
+secret_key = os.getenv('COMPOSER_SECRET_KEY')
+if not secret_key:
+    secret_key = f"{(rstr.unambiguous(16) + '-') * 4}{rstr.unambiguous(8).upper()}"
+    os.environ['COMPOSER_SECRET_KEY'] = secret_key
+
+USERNAME = 'root'
+TOKEN = os.getenv('COMPOSER_TOKEN')
+if not TOKEN:
+    TOKEN = f"{rstr.unambiguous(16).upper()}-{rstr.unambiguous(64)}"
+    print(f"Generated access token is: {TOKEN}")
+    os.environ['COMPOSER_TOKEN'] = TOKEN
+
+app.config['SECRET_KEY'] = secret_key
+app.config['SIMPLELOGIN_USERNAME'] = USERNAME
+app.config['SIMPLELOGIN_PASSWORD'] = TOKEN
+app.jinja_env.globals.update(version=version)
+app.jinja_env.globals.update(alert='Not logged in')
+def login_checker(user):
+    if user.get('password') == TOKEN and user.get('username') == USERNAME:
+        print('login ok')
+        app.jinja_env.globals.update(alert='Logged out')
+        return True
+    print('login not successful')
+    app.jinja_env.globals.update(alert='Invalid credentials')
+    return False
+
+SimpleLogin(app, login_checker=login_checker)
+
 
 feat = {
     'Frontend': {
@@ -55,7 +91,18 @@ for k,v in feat.items():
 print(fes)
 print(dbs)
 
-@app.route('/', methods =['GET', 'POST'])
+
+
+@app.route('/')
+def index():
+    if is_logged_in('root'):
+        return render_template('index.html', feat=feat)
+    else:
+        return redirect(url_for('simplelogin.login'))
+
+
+@app.route('/compose', methods =['GET', 'POST'])
+@login_required
 def form():
     if request.method == 'POST':
         data = dict(request.form)
@@ -152,8 +199,8 @@ def form():
             payload[k] = re.sub(r"#{{.+?}}#\n", '', payload[k])
             # payload[k] = re.sub(r"^\s*\n", '', payload[k], flags=re.MULTILINE)
         sorted_payload = dict(sorted(payload.items()))
-        return render_template('output.html', payload=sorted_payload, version=version)
-    return render_template('index.html', feat=feat, version=version)
+        return render_template('output.html', payload=sorted_payload)
+    return render_template('index.html', feat=feat)
  
 if __name__=='__main__':
 #    app.run()

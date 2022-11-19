@@ -76,7 +76,7 @@
 <!--    <div class="head opossum" onClick="zipall()"></div> -->
 <div class="head" id="back">
     <div class="head-buttons">
-        <a href="/" class="button back">Back</a>
+        <a href="/compose" class="button back">Back</a>
     </div>
     <div class="alist">
     {% for k in payload.keys() %}
@@ -116,7 +116,7 @@
 <div class="tail">
     <div class="header-buttons"><a href="#back" class="local button top block-button">Top</a></div>
 </div>
-<div class="tail version">version {{ version }}</div>
+<div class="tail version">version {{ version() }}</div>
 <div class="tail" id="aaa.txt" onClick="download('aaa.txt')">
     <div class="opossum"><span class="invis">AAAAAAAA! A! AAA!</span></div>
 </div>
